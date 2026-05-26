@@ -19,6 +19,21 @@ from src.utils.metrics import compute_attack_success_rate
 from src.utils.visualization import plot_attack_results
 
 
+def tensor_to_python(obj):
+    """Recursively convert PyTorch tensors in a dict/list to Python primitives."""
+    if isinstance(obj, torch.Tensor):
+        if obj.numel() == 1:
+            return obj.item()
+        return obj.detach().cpu().tolist()
+    elif isinstance(obj, dict):
+        return {k: tensor_to_python(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [tensor_to_python(v) for v in obj]
+    elif isinstance(obj, tuple):
+        return [tensor_to_python(v) for v in obj]
+    return obj
+
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate adversarial attacks")
     parser.add_argument("--model_path", type=str, default="results/baseline_model.pth")
@@ -113,8 +128,9 @@ def main():
     }
 
     results_path = os.path.join(args.out_dir, f"attack_results_{timestamp}.json")
+    results_serializable = tensor_to_python(results)
     with open(results_path, "w") as f:
-        json.dump(results, f, indent=2)
+        json.dump(results_serializable, f, indent=2)
     print(f"\nResults saved to {results_path}")
 
     # Plot feature attack comparison

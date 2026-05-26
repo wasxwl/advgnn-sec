@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.dataset.loader import get_dataset
 from src.dataset.preprocess import normalize_features, create_train_val_test_split
 from src.models.detector import GCNDetector, GATDetector
-from src.models.attack import GraphAttack, FeatureAttack
+from src.models.attack import MetaGradGraphAttack, FeatureAttack
 from src.models.defense import AdversarialTraining, RobustDetector
 from src.utils.metrics import compute_attack_success_rate, compute_metrics
 from src.utils.visualization import plot_attack_results, plot_comparison_bar
@@ -124,7 +124,7 @@ def evaluate_feature_attack(model, data, target_mask, device="cpu"):
 
 def evaluate_graph_attack(model, data, target_mask, budgets, device="cpu"):
     """Evaluate model under graph attack with varying budgets."""
-    graph_attack = GraphAttack(model, budget_ratio=0.05)
+    graph_attack = MetaGradGraphAttack(model, budget_ratio=0.05)
     asr_values = []
     for budget in budgets:
         graph_attack.budget_ratio = budget
