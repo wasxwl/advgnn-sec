@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Results and checkpoints
+results/*.json
+results/*.pth
+results/*.pt
+results/*.pkl
+
+# Logs
+*.log
+
+# LaTeX auxiliary files
+*.aux
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Data (large files - download separately)
+data/MGTAB/*.pt
+data/TwiBot-20/*.pt
+data/TwiBot-20/*.json
+
+# Environment
+.env
+.venv/

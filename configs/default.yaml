@@ -1,0 +1,39 @@
+---
+# Default configuration
+
+dataset:
+  name: synthetic
+  n_normal: 800
+  n_anomaly: 200
+  n_attacker: 50
+  feature_dim: 16
+
+model:
+  type: gcn  # gcn or gat
+  hidden_dim: 64
+  dropout: 0.5
+
+training:
+  epochs: 200
+  lr: 0.01
+  weight_decay: 0.0005
+  early_stopping_patience: 20
+  seed: 42
+
+attack:
+  graph:
+    budget_ratio: 0.05
+  feature:
+    perturbation_bound: 2.0
+    n_steps: 50
+    lr: 0.01
+
+defense:
+  adversarial_training:
+    attack_budget: 0.03
+    feature_bound: 1.5
+    attack_freq: 3
+    alpha: 0.5
+
+output:
+  dir: results
